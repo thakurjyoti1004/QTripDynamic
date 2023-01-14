@@ -5,21 +5,82 @@ import config from "../conf/index.js";
 function getCityFromURL(search) {
   // TODO: MODULE_ADVENTURES
   // 1. Extract the city id from the URL's Query Param and return it
-
+  let params = new URLSearchParams(search);
+  let queryParam = params.get("city");
+  return queryParam;
 }
 
 //Implementation of fetch call with a paramterized input based on city
 async function fetchAdventures(city) {
   // TODO: MODULE_ADVENTURES
   // 1. Fetch adventures using the Backend API and return the data
-
+  try{
+    let backendApi = await fetch(`http://3.109.131.150:8082/adventures?city=${city}`);
+    let backendJsonData = await backendApi.json();
+    console.log(backendJsonData);
+    return backendJsonData;
+    
+  }
+  catch(err){
+    return null;
+  }
+  
 }
 
 //Implementation of DOM manipulation to add adventures for the given city from list of adventures
 function addAdventureToDOM(adventures) {
   // TODO: MODULE_ADVENTURES
   // 1. Populate the Adventure Cards and insert those details into the DOM
+    adventures.forEach((data) =>{
+      
+    let divTile = document.createElement("div");
+    divTile.classList.add("col-12");
+    divTile.classList.add("col-sm-6");
+    divTile.classList.add("col-md-3");
+    divTile.classList.add("flex-card");
+    document.getElementById("data").appendChild(divTile);
 
+    let activityCardDiv= document.createElement("div");
+    activityCardDiv.classList.add("card");
+    activityCardDiv.classList.add("custom-card");
+
+    divTile.appendChild(activityCardDiv);
+
+    let anchorTag = document.createElement("a");
+    anchorTag.classList.add("activity-card");
+    let adventure_id =data.id;
+    anchorTag.id=adventure_id;
+    anchorTag.href="detail/?adventure="+adventure_id;
+    
+    activityCardDiv.appendChild(anchorTag);
+
+    let image = document.createElement("img");
+    image.src=data.image;
+    anchorTag.appendChild(image);
+
+    let categoryDiv=document.createElement("div");
+    categoryDiv.classList.add("advCategory");
+    let h5=document.createElement("h5");
+    let category= data.category;
+    h5.innerText=`${category}`;
+    anchorTag.appendChild(categoryDiv);
+    categoryDiv.appendChild(h5);
+
+    let textDiv = document.createElement("div");
+    anchorTag.appendChild(textDiv);
+
+    let name =data.name;
+    let costPerHead =data.costPerHead;
+    let duration =data.duration;
+    textDiv.style.width="100%";
+    textDiv.style.padding="2px";
+    textDiv.innerHTML = `<span>${name}</span>
+    <span class="float-end">₹${costPerHead}</span>
+    <div><span>Duration</span>
+    <span class="float-end">${duration} Hours</span></div>`
+
+    }
+    );
 }
 
 //Implementation of filtering by duration which takes in a list of adventures, the lower bound and upper bound of duration and returns a filtered list of adventures.

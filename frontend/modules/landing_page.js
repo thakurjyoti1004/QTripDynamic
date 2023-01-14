@@ -3,7 +3,7 @@ import config from "../conf/index.js";
 async function init() {
     //Fetches list of all cities along with their images and description
   console.log("From init ()");
-  console.log("http://13.233.228.176:8082/cities");
+  console.log("http://3.109.131.150:8082/cities");
 
   let cities = await fetchCities();
   console.log(cities);
@@ -20,7 +20,7 @@ async function fetchCities() {
   // TODO: MODULE_CITIES
   // 1. Fetch cities using the Backend API and return the data
     try{
-      let fetchingCitiesApi = await fetch("http://13.233.228.176:8082/cities");
+      let fetchingCitiesApi = await fetch("http://3.109.131.150:8082/cities");
       let citiesData = await fetchingCitiesApi.json();
       return citiesData;
     }
@@ -35,19 +35,22 @@ function addCityToDOM(id, city, description, image) {
   // TODO: MODULE_CITIES
   // 1. Populate the City details and insert those details into the DOM
 
+    let colDiv =document.createElement("div");
+    colDiv.classList.add("col-sm-6");
+    colDiv.classList.add("col-md-3");
+    colDiv.classList.add("flex-card");
+
+    document.getElementById("data").appendChild(colDiv);
+
     let tileDiv = document.createElement("div");
     tileDiv.classList.add("card");
-    tileDiv.style.width = "270px";
-    tileDiv.style.height = "350px";
-    tileDiv.style.margin = "5px";
-    
-       
-    document.getElementById("data").appendChild(tileDiv);
+    tileDiv.classList.add("custom-card");   
+    colDiv.appendChild(tileDiv);
   
     let tileLink = document.createElement("a");
     tileLink.id = id;
     tileLink.classList.add("tile");
-        tileLink.href= "pages/adventures/?city="+id;
+    tileLink.href= "pages/adventures/?city="+id;
     tileDiv.appendChild(tileLink);
     
     let imageTag = document.createElement("img");
