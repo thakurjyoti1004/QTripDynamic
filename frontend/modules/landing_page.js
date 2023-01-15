@@ -3,7 +3,7 @@ import config from "../conf/index.js";
 async function init() {
     //Fetches list of all cities along with their images and description
   console.log("From init ()");
-  console.log("http://3.109.131.150:8082/cities");
+  console.log(`${config.backendEndpoint}/cities`);
 
   let cities = await fetchCities();
   console.log(cities);
@@ -20,7 +20,7 @@ async function fetchCities() {
   // TODO: MODULE_CITIES
   // 1. Fetch cities using the Backend API and return the data
     try{
-      let fetchingCitiesApi = await fetch("http://3.109.131.150:8082/cities");
+      let fetchingCitiesApi = await fetch(`${config.backendEndpoint}/cities`);
       let citiesData = await fetchingCitiesApi.json();
       return citiesData;
     }
