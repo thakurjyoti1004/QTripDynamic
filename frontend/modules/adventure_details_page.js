@@ -4,16 +4,24 @@ import config from "../conf/index.js";
 function getAdventureIdFromURL(search) {
   // TODO: MODULE_ADVENTURE_DETAILS
   // 1. Get the Adventure Id from the URL
+<<<<<<< HEAD
     let adventureUrl = new URLSearchParams(search);
     let adventureIdFromUrl = adventureUrl.get("adventure");
 
   // Place holder for functionality to work in the Stubs
     return adventureIdFromUrl;
+=======
+
+
+  // Place holder for functionality to work in the Stubs
+  return null;
+>>>>>>> d23d882f417fdd553d3142a9e1fc0cb4e8358660
 }
 //Implementation of fetch call with a paramterized input based on adventure ID
 async function fetchAdventureDetails(adventureId) {
   // TODO: MODULE_ADVENTURE_DETAILS
   // 1. Fetch the details of the adventure by making an API call
+<<<<<<< HEAD
   try{
     let adventureDetailsByApiCall = await fetch(`${config.backendEndpoint}/adventures/detail?adventure=${adventureId}`)
     let adventuredesApiJsonData = await adventureDetailsByApiCall.json();
@@ -24,11 +32,18 @@ async function fetchAdventureDetails(adventureId) {
   }
   // Place holder for functionality to work in the Stubs
   // console.log(adventuredesApiJsonData,"data");
+=======
+
+
+  // Place holder for functionality to work in the Stubs
+  return null;
+>>>>>>> d23d882f417fdd553d3142a9e1fc0cb4e8358660
 }
 
 //Implementation of DOM manipulation to add adventure details to DOM
 function addAdventureDetailsToDOM(adventure) {
   // TODO: MODULE_ADVENTURE_DETAILS
+<<<<<<< HEAD
   // 1. Add the details of the adventure to the HTML 
   
   let advName = document.getElementById("adventure-name");
@@ -48,11 +63,17 @@ function addAdventureDetailsToDOM(adventure) {
   let advContent = document.getElementById("adventure-content");
   advContent.innerHTML= adventure.content;
  }
+=======
+  // 1. Add the details of the adventure to the HTML DOM
+
+}
+>>>>>>> d23d882f417fdd553d3142a9e1fc0cb4e8358660
 
 //Implementation of bootstrap gallery component
 function addBootstrapPhotoGallery(images) {
   // TODO: MODULE_ADVENTURE_DETAILS
   // 1. Add the bootstrap carousel to show the Adventure images
+<<<<<<< HEAD
   let gallery = document.getElementById("photo-gallery");  
   gallery.innerHTML= `<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
   <div class="carousel-indicators">
@@ -85,6 +106,9 @@ function addBootstrapPhotoGallery(images) {
     carouselInnerDiv.querySelector("div").classList.add("active");
     carouselItemDiv.appendChild(carouselImage);
   })
+=======
+
+>>>>>>> d23d882f417fdd553d3142a9e1fc0cb4e8358660
 }
 
 //Implementation of conditional rendering of DOM based on availability
