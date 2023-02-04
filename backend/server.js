@@ -246,8 +246,3 @@ Helper function to generate a random integer between two limits
 function randomInteger(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
-<<<<<<< HEAD
-
-
-=======
->>>>>>> d23d882f417fdd553d3142a9e1fc0cb4e8358660

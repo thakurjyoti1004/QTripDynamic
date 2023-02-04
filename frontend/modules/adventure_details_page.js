@@ -4,24 +4,16 @@ import config from "../conf/index.js";
 function getAdventureIdFromURL(search) {
   // TODO: MODULE_ADVENTURE_DETAILS
   // 1. Get the Adventure Id from the URL
-<<<<<<< HEAD
     let adventureUrl = new URLSearchParams(search);
     let adventureIdFromUrl = adventureUrl.get("adventure");
 
   // Place holder for functionality to work in the Stubs
     return adventureIdFromUrl;
-=======
-
-
-  // Place holder for functionality to work in the Stubs
-  return null;
->>>>>>> d23d882f417fdd553d3142a9e1fc0cb4e8358660
 }
 //Implementation of fetch call with a paramterized input based on adventure ID
 async function fetchAdventureDetails(adventureId) {
   // TODO: MODULE_ADVENTURE_DETAILS
   // 1. Fetch the details of the adventure by making an API call
-<<<<<<< HEAD
   try{
     let adventureDetailsByApiCall = await fetch(`${config.backendEndpoint}/adventures/detail?adventure=${adventureId}`)
     let adventuredesApiJsonData = await adventureDetailsByApiCall.json();
@@ -32,18 +24,11 @@ async function fetchAdventureDetails(adventureId) {
   }
   // Place holder for functionality to work in the Stubs
   // console.log(adventuredesApiJsonData,"data");
-=======
-
-
-  // Place holder for functionality to work in the Stubs
-  return null;
->>>>>>> d23d882f417fdd553d3142a9e1fc0cb4e8358660
 }
 
 //Implementation of DOM manipulation to add adventure details to DOM
 function addAdventureDetailsToDOM(adventure) {
   // TODO: MODULE_ADVENTURE_DETAILS
-<<<<<<< HEAD
   // 1. Add the details of the adventure to the HTML 
   
   let advName = document.getElementById("adventure-name");
@@ -63,17 +48,11 @@ function addAdventureDetailsToDOM(adventure) {
   let advContent = document.getElementById("adventure-content");
   advContent.innerHTML= adventure.content;
  }
-=======
-  // 1. Add the details of the adventure to the HTML DOM
-
-}
->>>>>>> d23d882f417fdd553d3142a9e1fc0cb4e8358660
 
 //Implementation of bootstrap gallery component
 function addBootstrapPhotoGallery(images) {
   // TODO: MODULE_ADVENTURE_DETAILS
   // 1. Add the bootstrap carousel to show the Adventure images
-<<<<<<< HEAD
   let gallery = document.getElementById("photo-gallery");  
   gallery.innerHTML= `<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
   <div class="carousel-indicators">
@@ -106,23 +85,35 @@ function addBootstrapPhotoGallery(images) {
     carouselInnerDiv.querySelector("div").classList.add("active");
     carouselItemDiv.appendChild(carouselImage);
   })
-=======
-
->>>>>>> d23d882f417fdd553d3142a9e1fc0cb4e8358660
 }
 
 //Implementation of conditional rendering of DOM based on availability
 function conditionalRenderingOfReservationPanel(adventure) {
   // TODO: MODULE_RESERVATIONS
   // 1. If the adventure is already reserved, display the sold-out message.
+  if(adventure.available==true){
+    let reservationPanelSoldOut = document.getElementById("reservation-panel-sold-out");
+    reservationPanelSoldOut.style.display="none";
+    let reservationPanel = document.getElementById("reservation-panel-available");
+    reservationPanel.style.display="block";
 
+    let reservationPerCost = document.getElementById("reservation-person-cost");
+    reservationPerCost.innerHTML= adventure.costPerHead;
+  }
+  else{
+    let hideReservationPanel = document.getElementById("reservation-panel-available");
+    hideReservationPanel.style.display="none";
+    document.getElementById("reservation-panel-sold-out").style.display="block";
+  }
 }
 
 //Implementation of reservation cost calculation based on persons
 function calculateReservationCostAndUpdateDOM(adventure, persons) {
   // TODO: MODULE_RESERVATIONS
   // 1. Calculate the cost based on number of persons and update the reservation-cost field
-
+  let costBasedOnPersons = persons*adventure.costPerHead;
+  let reservationCost = document.getElementById("reservation-cost");
+  reservationCost.textContent = costBasedOnPersons;
 }
 
 //Implementation of reservation form submission
@@ -130,13 +121,49 @@ function captureFormSubmit(adventure) {
   // TODO: MODULE_RESERVATIONS
   // 1. Capture the query details and make a POST API call using fetch() to make the reservation
   // 2. If the reservation is successful, show an alert with "Success!" and refresh the page. If the reservation fails, just show an alert with "Failed!".
+ 
+  let form = document.getElementById("myForm");
+  form.addEventListener("submit",(event)=>{
+    event.preventDefault();
+    let personName = form.elements["name"].value;
+    let reservationDate = form.elements["date"].value;
+    let numberOfPerson = form.elements["person"].value;
+    
+    let url =`${config.backendEndpoint}/reservations/new`;
+    fetch(url,{
+      method:"POST",
+      body: JSON.stringify(
+        { 
+          name:personName,
+          date:reservationDate,
+          person:numberOfPerson,
+          adventure:adventure.id
+        }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8"
+      }
+    }).then(res => res.json()).then(res => {
+      if(res.success== false){
+        alert("Failed!");
+      }else{
+        alert("Success!");
+        window.location.reload();
+      }
+  });
+    
+    });
 }
 
 //Implementation of success banner after reservation
 function showBannerIfAlreadyReserved(adventure) {
   // TODO: MODULE_RESERVATIONS
   // 1. If user has already reserved this adventure, show the reserved-banner, else don't
-
+  let reservedBanner = document.getElementById("reserved-banner");
+    if(adventure.reserved == true){
+    reservedBanner.style.display="block";
+    }else{
+      reservedBanner.style.display="none";
+    }
 }
 
 export {
